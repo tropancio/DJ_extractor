@@ -66,7 +66,7 @@ class WorkerThread(QThread):
             Data_Procesado.loc[len(Data_Procesado)] = [texto]+Separados[:len(columna)]
             
             if True:
-                Data_Procesado = Data_Procesado.applymap(self.Numero)
+                Data_Procesado = Data_Procesado.map(self.Numero)
                 
             Agrupacion_Registros.append(Data_Procesado)
 
@@ -166,8 +166,8 @@ class FileProcessorApp(QWidget):
             int(re.findall(r'\d+', str(x))[0]) if "REGISTRO" in str(x) and re.findall(r'\d+', str(x)) else np.nan
             for x in tabla["ÍNDICE"]
         ]
-        tabla["Extensión"] = tabla["Extensión"].fillna(method="ffill")
-        tabla['Unnamed: 1'] = tabla['Unnamed: 1'].fillna(method='ffill')
+        tabla["Extensión"] = tabla["Extensión"].ffill()
+        tabla['Unnamed: 1'] = tabla['Unnamed: 1'].ffill()
         tabla = tabla.fillna("")
         tabla = tabla[tabla["Unnamed: 3"]!=""]
         tabla["Descripcion"]= [x1 + "_" + x2 if x2!="" else x1 for x1,x2 in zip(tabla["Unnamed: 1"],tabla["Unnamed: 2"])]
